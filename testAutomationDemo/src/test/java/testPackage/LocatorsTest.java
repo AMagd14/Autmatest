@@ -11,6 +11,7 @@ import w3schools.HtmlTables;
 
 public class LocatorsTest {
 	private WebDriver driver;
+	//this is to test source control
 
 	@Test(description = "Given the browser is open, When I navigate to 'HTML Tables' page, Then the country name for the company 'Ernst Handel' should be 'Austria'")
 	public void checkCountryNameForErnstHandel() {
