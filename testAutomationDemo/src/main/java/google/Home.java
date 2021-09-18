@@ -10,7 +10,7 @@ import com.shaft.gui.element.ElementActions;
 public class Home {
 	
 	//variables
-	private WebDriver driver;
+	private ThreadLocal<WebDriver> driver;
 	private String url = "https://www.google.com/";
 	
 	//locators
@@ -21,19 +21,19 @@ public class Home {
 	private static By search_textBox = By.name("q"); // *[@name='q']
 
 	//constructor
-	public Home(WebDriver driver) {
+	public Home(ThreadLocal<WebDriver> driver) {
 		this.driver = driver;
 	}
 	
 	//keywords / actions
 	public Home navigate() {
-		BrowserActions.navigateToURL(driver, url+"ncr", url);
+		BrowserActions.navigateToURL(driver.get(), url+"ncr", url);
 		return this;
 	}
 	
 	public SearchResults search(String query) {
-		ElementActions.type(driver, search_textBox, query);
-		ElementActions.keyPress(driver, search_textBox, Keys.ENTER);
+		ElementActions.type(driver.get(), search_textBox, query);
+		ElementActions.keyPress(driver.get(), search_textBox, Keys.ENTER);
 		return new SearchResults(driver);
 	}
 }

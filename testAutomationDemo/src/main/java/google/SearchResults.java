@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class SearchResults {
 	//variables
-	private WebDriver driver;
+	private ThreadLocal<WebDriver> driver;
 	
 	//locators
 	private static By resultStats_label = By.id("result-stats");
@@ -15,7 +15,7 @@ public class SearchResults {
 
 	
 	//constructor
-	public SearchResults(WebDriver driver) {
+	public SearchResults(ThreadLocal<WebDriver> driver) {
 		this.driver = driver;
 	}
 	

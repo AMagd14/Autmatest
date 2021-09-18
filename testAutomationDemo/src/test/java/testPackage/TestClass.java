@@ -14,12 +14,12 @@ import google.Home;
 import google.SearchResults;
 
 public class TestClass {
-	private WebDriver driver;
+	private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 	@Test(description = "Given the browser is open, When I navigate to Google Home, Then Google logo will be displayed")
 	public void checkThatGoogleLogoIsDisplayed() {		
 		Validations.assertThat()
-		.element(driver, Home.getGoogleLogo_image())
+		.element(driver.get(), Home.getGoogleLogo_image())
 		.matchesReferenceImage()
 		.withCustomReportMessage("Checking to see that the google logo image is displayed")
 		.perform();
@@ -27,7 +27,7 @@ public class TestClass {
 
 	@Test
 	public void checkThatPageTitleIsCorrect() {
-		Validations.assertThat().browser(driver).attribute(BrowserAttribute.TITLE).isEqualTo("Google").perform();
+		Validations.assertThat().browser(driver.get()).attribute(BrowserAttribute.TITLE).isEqualTo("Google").perform();
 	}
 
 	@Test(description = "Given the browser is open, And I navigate to Google.com, When I search for 'Selenium WebDriver', Then The Result Stats will not be empty.")
@@ -35,7 +35,7 @@ public class TestClass {
 		new Home(driver).search("Selenium WebDriver");	
 		
 		Validations.assertThat()
-		.element(driver, SearchResults.getResultStats_label())
+		.element(driver.get(), SearchResults.getResultStats_label())
 		.text()
 		.doesNotEqual("")
 		.perform();
@@ -43,12 +43,12 @@ public class TestClass {
 
 	@BeforeMethod
 	public void beforeMethod() {
-		driver = DriverFactory.getDriver();				
+		driver.set(DriverFactory.getDriver()); 			
 		new Home(driver).navigate();
 	}
 
 	@AfterMethod
 	public void afterMethod() {
-		BrowserActions.closeCurrentWindow(driver);
+		BrowserActions.closeCurrentWindow(driver.get());
 	}
 }
