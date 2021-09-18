@@ -32,8 +32,12 @@ public class Home {
 	}
 	
 	public SearchResults search(String query) {
-		ElementActions.type(driver.get(), search_textBox, query);
-		ElementActions.keyPress(driver.get(), search_textBox, Keys.ENTER);
+//		ElementActions.type(driver.get(), search_textBox, query);
+//		ElementActions.keyPress(driver.get(), search_textBox, Keys.ENTER);
+		
+		new ElementActions(driver.get()).type(search_textBox, query)
+		.keyPress(search_textBox, Keys.ENTER);
+		
 		return new SearchResults(driver);
 	}
 }
